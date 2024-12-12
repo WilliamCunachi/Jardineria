@@ -120,7 +120,27 @@ ALTER TABLE [dbo].[cliente] ADD  DEFAULT (NULL) FOR [limite_credito]
 GO
 ALTER TABLE [dbo].[cliente]  WITH CHECK ADD FOREIGN KEY([codigo_empleado_rep_ventas])
 REFERENCES [dbo].[empleado] ([codigo_empleado])
-GO
+GO 
+	 
+INSERT INTO Cliente_USA_General(
+    codigo_cliente, nombre_cliente, nombre_contacto, apellido_contacto,
+    telefono, fax, linea_direccion1, linea_direccion2, ciudad, region, codigo_postal
+)
+SELECT 
+    codigo_cliente, nombre_cliente, nombre_contacto, apellido_contacto,
+    telefono, fax, linea_direccion1, linea_direccion2, ciudad, region, codigo_postal
+FROM [jardineria].[dbo].[cliente]
+WHERE pais = 'USA';
+
+
+INSERT INTO Cliente_USA_Financiero (
+    codigo_cliente, codigo_empleado_rep_ventas, limite_credito
+)
+SELECT 
+    codigo_cliente, codigo_empleado_rep_ventas, limite_credito
+FROM [jardineria].[dbo].[cliente]
+WHERE pais = 'USA';
+
  
 INSERT INTO Cliente_Spain_General
 (
